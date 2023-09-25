@@ -1,6 +1,6 @@
 import requests
 import time
-import pandas as pd 
+import pandas as pd
 from bs4 import BeautifulSoup
 
 # base URL for the Kijiji website
