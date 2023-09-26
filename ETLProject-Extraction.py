@@ -48,27 +48,29 @@ def get_item_info(url):
 
 # Get brand info
     try: 
-        item_brand = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
-        make = item_brand[1].text
-        print (make)
+        make = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        item_brand = make[1].text
+        print (item_brand)
     except:
         item_brand =''
         print ("Brand not found")
 # Get model info    
     try:
-        item_model = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
-        model = item_model[2].text
-        print (model)
+        model = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        item_model = model[2].text
+        print (item_model)
     except:
         item_model =''
+        print ("Model not found")
 
 # Get the model date
     try:
-        item_date = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
-        year = item_date[0].text
-        print (year)
+        year = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        item_date = year[0].text
+        print (item_date)
     except:
         item_date = 0
+        print ("Year not found")
 
 # Get list price :integer
     try:
@@ -79,11 +81,12 @@ def get_item_info(url):
 
 # Get color
     try:
-        item_color = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
-        color = item_color[4].text
-        print (color)
+        color = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        item_color = color[4].text
+        print (item_color)
     except:
         item_color = ''
+        print ("Color not found")
 
 # Get the configuration
     try:
@@ -101,41 +104,46 @@ def get_item_info(url):
         
 # Get the body type
     try:
-        item_bodytype = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
-        bodytype = item_bodytype[5].text
-        print (bodytype)
+        bodytype = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        item_bodytype = bodytype[5].text
+        print (item_bodytype)
     except:
         item_bodytype = ''
+        print ("Bodytype not found")
 
         
 # Get the wheel configuration
     try:
-        item_wheelConfig = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
-        drivetrain = item_wheelConfig[6].text
-        print (drivetrain)
+        drivetrain = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        item_wheelConfig = drivetrain[6].text
+        print (item_wheelConfig)
     except:
         item_wheelConfig = ''
+        print ("Drivetrain not found")
 
 # Get the transmission type
     try:
-        item_transmission = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
-        transmission = item_transmission[7].text
-        print (transmission)
+        transmission = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        item_transmission = transmission[7].text
+        print (item_transmission)
     except:
         item_transmission = ''
+        print ("Transmission not found")
 
 # Get the fuel type
     try:
-        item_fueltype = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
-        fueltype = item_fueltype[8].text
-        print (fueltype)
+        fueltype = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        item_fueltype = fueltype[8].text
+        print (item_fueltype)
     except:
         item_fueltype = ''
+        print ("Fueltype not found")
 
 # Get the mileage 
     try:
         # item_mileage = bs_item.find(itemprop='mileageFromOdometer').text
-        item_mileage = bs_item.find('span', class_='sc-iapWAC hHmeML').text
+        mileage = bs_item.find_all('span', class_='sc-iapWAC hHmeML')
+        item_mileage = mileage[1].text
         item_mileage = int(item_mileage.replace(',',''))
         print (item_mileage)
 
@@ -157,18 +165,24 @@ def get_item_info(url):
 
 # Get vin number
     
-    if 'vin=' in item_carfax_link:
-        try:
-            item_vin_number = item_carfax_link.replace('vin=',' ').split()[-1]
-        except:
-            item_vin_number = ''
+    try:
+        vin = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        item_vin_number = vin[9].text
+        print (item_vin_number)
+    except:
+        item_vin_number = ''
+        print ("VIN number not found")
             
             
 # Get dealer's address        
     try:
-        item_dealer_add = bs_item.find(itemprop='address').text
+        # item_dealer_add = bs_item.find(itemprop='address').text
+        item_dealer_add = bs_item.find('span', class_="link-3970392289 link__default-1151936189 location-582645639").text
+        print (item_dealer_add)
+
     except:
         item_dealer_add = ''
+        print ("Address not found")
  
 
 # Get car image link
@@ -210,7 +224,7 @@ page_num = get_page_num(init_url)
 
 page_num
 
-page_num = 3
+page_num = 2
 
 all_info_list = []
 itemlist = []
