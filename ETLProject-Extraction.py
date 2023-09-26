@@ -48,20 +48,25 @@ def get_item_info(url):
 
 # Get brand info
     try: 
-        item_brand = bs_item.find(itemprop='brand').text
+        item_brand = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        make = item_brand[1].text
+        print (make)
     except:
         item_brand =''
-    
+        print ("Brand not found")
 # Get model info    
     try:
-        item_model = bs_item.find(itemprop='model').text
+        item_model = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        model = item_model[2].text
+        print (model)
     except:
         item_model =''
 
 # Get the model date
     try:
-        item_date = bs_item.find(itemprop='vehicleModelDate').text
-        item_date = int(item_date)
+        item_date = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        year = item_date[0].text
+        print (year)
     except:
         item_date = 0
 
@@ -74,7 +79,9 @@ def get_item_info(url):
 
 # Get color
     try:
-        item_color = bs_item.find(itemprop='color').text
+        item_color = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        color = item_color[4].text
+        print (color)
     except:
         item_color = ''
 
@@ -94,35 +101,47 @@ def get_item_info(url):
         
 # Get the body type
     try:
-        item_bodytype = bs_item.find(itemprop='bodyType').text
+        item_bodytype = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        bodytype = item_bodytype[5].text
+        print (bodytype)
     except:
         item_bodytype = ''
 
         
 # Get the wheel configuration
     try:
-        item_wheelConfig = bs_item.find(itemprop='driveWheelConfiguration').text
+        item_wheelConfig = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        drivetrain = item_wheelConfig[6].text
+        print (drivetrain)
     except:
         item_wheelConfig = ''
 
 # Get the transmission type
     try:
-        item_transmission = bs_item.find(itemprop='vehicleTransmission').text
+        item_transmission = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        transmission = item_transmission[7].text
+        print (transmission)
     except:
         item_transmission = ''
 
 # Get the fuel type
     try:
-        item_fueltype = bs_item.find(itemprop='fuelType').text
+        item_fueltype = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
+        fueltype = item_fueltype[8].text
+        print (fueltype)
     except:
         item_fueltype = ''
 
 # Get the mileage 
     try:
-        item_mileage = bs_item.find(itemprop='mileageFromOdometer').text
+        # item_mileage = bs_item.find(itemprop='mileageFromOdometer').text
+        item_mileage = bs_item.find('span', class_='sc-iapWAC hHmeML').text
         item_mileage = int(item_mileage.replace(',',''))
+        print (item_mileage)
+
     except:
         item_mileage = 0
+        print ("Mileage not found")
     
 # Car Accident Report link
 
