@@ -1,11 +1,15 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup 
+from selenium import webdriver
 
 import datetime
 import re
 
 import pandas as pd
 import numpy as np
+
+firefox_options = webdriver.FirefoxOptions()
+firefox_options.headless = True
 
 def get_page_num(url):
 
