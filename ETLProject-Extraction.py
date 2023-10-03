@@ -63,7 +63,7 @@ def get_item_info(url):
         item_model =''
         print ("Model not found")
 
-# Get the model date
+# Get the model year
     try:
         year = bs_item.find_all('span', class_='sc-bdOgaJ fVgBZP')
         item_date = year[0].text
@@ -76,8 +76,10 @@ def get_item_info(url):
     try:
         item_price = bs_item.find('span',itemprop='price').text
         item_price = int(item_price.replace('$','').replace(',','').replace('.',' ').split()[0])
+        print (item_price)
     except:
         item_price = 0
+        print ("Price not found")
 
 # Get color
     try:
@@ -89,17 +91,23 @@ def get_item_info(url):
         print ("Color not found")
 
 # Get the configuration
-    try:
-        item_config = bs_item.find(itemprop='vehicleConfiguration').text
-    except:
-        item_config = ''
+    # try:
+    #     item_config = bs_item.find(itemprop='vehicleConfiguration').text
+    # except:
+    #     item_config = ''
+    #     print ("Vehicle configuration not found")
 
         
 # Get the car condition
     try:
-        item_condition = bs_item.find(itemprop='itemCondition').text
+        # item_condition = bs_item.find(itemprop='itemCondition').text
+
+        condition = bs_item.find_all('span', class_='sc-iapWAC hHmeML')
+        item_condition = condition[0].text
+        print (item_condition)
     except:
         item_condition = ''
+        print ("Vehicle condition not found")
 
         
 # Get the body type
@@ -162,6 +170,7 @@ def get_item_info(url):
             item_carfax_link = item_carfax.attrs['href']
         except:
             item_carfax_link = ''
+            print ("Accident report link is not found")
 
 # Get vin number
     
@@ -177,8 +186,13 @@ def get_item_info(url):
 # Get dealer's address        
     try:
         # item_dealer_add = bs_item.find(itemprop='address').text
-        item_dealer_add = bs_item.find('span', class_="link-3970392289 link__default-1151936189 location-582645639").text
+        
+        item_dealer_add = bs_item.find('href', class_="link-3970392289 link__default-1151936189 location-582645639").text
         print (item_dealer_add)
+
+        # address = bs_item.find('a', class_='link-3970392289 link__default-1151936189 location-582645639')
+        # item_dealer_add = address.text
+        # print (item_dealer_add)
 
     except:
         item_dealer_add = ''
@@ -188,11 +202,12 @@ def get_item_info(url):
 # Get car image link
     
     try:
-        item_image = bs_item.find('img',itemprop='image')
-        item_image_link = item_image.attrs['src']
+        item_image = bs_item.find('img',class_='image')
+        item_image_link = item_image['src']
+        print (item_image_link)
     except: 
         item_image_link = ''
-   
+        print ("Car image not found")
         
 
     
