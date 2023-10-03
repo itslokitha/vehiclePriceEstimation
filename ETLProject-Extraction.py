@@ -11,6 +11,11 @@ import numpy as np
 firefox_options = webdriver.FirefoxOptions()
 firefox_options.headless = True
 
+gecko_path = "./selenium/geckodriver_macos"
+
+driver = webdriver.Firefox(executable_path = gecko_path, options=firefox_options)
+driver.get("https://github.com/SeleniumHQ/Selenium")
+
 def get_page_num(url):
 
     html = urlopen(url)
