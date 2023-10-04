@@ -274,4 +274,8 @@ df.dropna(subset=['brand'],inplace=True)
 
 df.head()
 
-df.to_csv('kijiji_data_fullset.csv')
+today_date = datetime.date.today().strftime('%YYYY%mm%dd')
+file_name = f'kijiji_data_{today_date}.csv'
+
+# df.to_csv('kijiji_data_fullset.csv')
+df.to_csv(file_name, index=False)
