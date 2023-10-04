@@ -1,31 +1,26 @@
 import pandas as pd
 
-def get_average_value(year, make, model, odometer):
-    # Load the data from the CSV file
-    file_path = '/datasheets/kijiji_data_2023-10-03.csv'
-    car_df = pd.read_csv(file_path)
-    
-    # Filter the DataFrame based on user input
-    filtered_df = car_df[(car_df['model_year'] == year) & 
-                         (car_df['brand'] == make) & 
-                         (car_df['model'] == model)]
-    
-    # Calculate the average value
-    if len(filtered_df) > 0:
-        average_value = filtered_df['list_price'].mean()
-        return average_value
-    else:
-        return None
+def get_average_value():
+    year = input("Enter the year of the vehicle: ")
+    make = input("Enter the make of the vehicle: ")
+    model = input("Enter the model of the vehicle: ")
+    odometer = int(input("Enter the odometer reading of the vehicle: "))
 
-# Example usage:
-year = 2019
-make = 'Honda'
-model = 'Pilot'
-odometer = 50000
+    file_path = '/Users/lokitha/Desktop/Final Project/dataExtractionProgram/datasheets/kijiji_data_2023-10-03.csv'  # Adjust the file path as needed
 
-average_value = get_average_value(year, make, model, odometer)
+    try:
+        car_df = pd.read_csv(file_path)
+        filtered_df = car_df[(car_df['model_year'] == int(year)) & 
+                             (car_df['brand'] == make) & 
+                             (car_df['model'] == model)]
+        
+        if not filtered_df.empty:
+            avg_price = filtered_df['list_price'].mean()
+            print(f"The average price for a {year} {make} {model} with {odometer} miles is: ${avg_price:.2f}")
+        else:
+            print(f"No data found for {year} {make} {model}.")
 
-if average_value is not None:
-    print(f"The average value of a {year} {make} {model} with {odometer} miles is ${average_value:.2f}")
-else:
-    print(f"No data available for the specified vehicle.")
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found.")
+
+get_average_value()
