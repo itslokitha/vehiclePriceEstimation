@@ -42,8 +42,6 @@ def get_item_info(url):
     item_image_link = ''
     item_dealer_add = ''
    
-
-    # driver.get(url)
     html = urlopen(url)
     bs_item = BeautifulSoup(html, 'html.parser')
 
@@ -197,9 +195,9 @@ def get_item_info(url):
  
 
 # Get car image link
-    
+
     try:
-        item_image = bs_item.find('img',class_='image')
+        item_image = bs_item.find('img', class_='image-3484370594 heroImageBackground-2776220296')
         item_image_link = item_image['src']
         print (item_image_link)
     except: 
@@ -207,7 +205,6 @@ def get_item_info(url):
         print ("Car image not found")
         
 
-    
     item_info_list.append(item_brand)
     item_info_list.append(item_model)
     item_info_list.append(item_date)
