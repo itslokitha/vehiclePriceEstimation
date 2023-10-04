@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 
 import datetime
 import re
+import os
 
 import pandas as pd
 import numpy as np
@@ -274,8 +275,11 @@ df.dropna(subset=['brand'],inplace=True)
 
 df.head()
 
-today_date = datetime.date.today().strftime('%Y%m%d')
+today_date = datetime.date.today().strftime('%Y-%m-%d')
+
+outputDirectory = 'datasheets'
 file_name = f'kijiji_data_{today_date}.csv'
+file_path = os.path.join(outputDirectory, file_name)
 
 # df.to_csv('kijiji_data_fullset.csv')
-df.to_csv(file_name, index=False)
+df.to_csv(file_path, index=False)
