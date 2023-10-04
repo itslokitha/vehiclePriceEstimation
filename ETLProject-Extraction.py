@@ -1,20 +1,11 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup 
-from selenium import webdriver
 
 import datetime
 import re
 
 import pandas as pd
 import numpy as np
-
-firefox_options = webdriver.FirefoxOptions()
-firefox_options.headless = True
-
-gecko_path = "./selenium/geckodriver_macos"
-
-driver = webdriver.Firefox(executable_path = gecko_path, options=firefox_options)
-driver.get("https://github.com/SeleniumHQ/Selenium")
 
 def get_page_num(url):
 
@@ -51,7 +42,8 @@ def get_item_info(url):
     item_image_link = ''
     item_dealer_add = ''
    
-        
+
+    # driver.get(url)
     html = urlopen(url)
     bs_item = BeautifulSoup(html, 'html.parser')
 
@@ -194,14 +186,10 @@ def get_item_info(url):
             
 # Get dealer's address        
     try:
-        # item_dealer_add = bs_item.find(itemprop='address').text
-        
-        item_dealer_add = bs_item.find('href', class_="link-3970392289 link__default-1151936189 location-582645639").text
-        print (item_dealer_add)
 
-        # address = bs_item.find('a', class_='link-3970392289 link__default-1151936189 location-582645639')
-        # item_dealer_add = address.text
-        # print (item_dealer_add)
+        address = bs_item.find('a', class_='link-3970392289 link__default-1151936189 location-582645639')
+        item_dealer_add = address.text
+        print (item_dealer_add)
 
     except:
         item_dealer_add = ''
@@ -283,7 +271,6 @@ columns_name = ['brand','model','model_year','list_price','color','configration'
 
 df.columns = columns_name
 
-
 nan_value = float("NaN")
 df.replace("", nan_value, inplace=True)
 df.dropna(subset=['brand'],inplace=True)
@@ -291,4 +278,3 @@ df.dropna(subset=['brand'],inplace=True)
 df.head()
 
 df.to_csv('kijiji_data_fullset.csv')
-
