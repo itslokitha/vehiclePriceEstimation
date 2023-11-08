@@ -1,48 +1,51 @@
+/* styles.css */
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .container {
-    max-width: 400px;
-    margin: 50px auto;
+    background-color: #fff;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-}
-
-h1 {
-    margin-bottom: 20px;
-}
-
-form label,
-form input {
-    display: block;
-    margin: 10px 0;
-}
-
-form input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
     border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-form input[type="submit"] {
+input[type=text], input[type=number] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
     background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
+    padding: 14px 20px;
+    margin: 8px 0;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-form input[type="submit"]:hover {
+input[type=submit]:hover {
     background-color: #45a049;
 }
 
-#result {
+#prediction-result {
     margin-top: 20px;
-    font-weight: bold;
+    padding: 10px;
+    color: #ffffff;
+    background-color: #4CAF50;
+    border-radius: 4px;
 }

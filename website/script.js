@@ -1,24 +1,53 @@
-document.getElementById('priceEstimatorForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+// script.js
+function sendPredictionRequest(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+    var formElements = document.getElementById("predictionForm").elements;
+    var formData = {
+        year: formElements.namedItem("year").value,
+        make: formElements.namedItem("make").value,
+        model: formElements.namedItem("model").value,
+        mileage: formElements.namedItem("mileage").value
+    };
+    
+    // fetch('/predict', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded',
+    //     },
+    //     body: new URLSearchParams(formData)
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //     document.getElementById('prediction-result').innerText = 'Predicted Price: ' + data.prediction;
+    // })
+    // .catch(error => {
+    //     document.getElementById('prediction-result').innerText = 'Error: ' + error;
+    // });
 
-    let year = document.getElementById('year').value;
-    let make = document.getElementById('make').value;
-    let model = document.getElementById('model').value;
-    let odometer = parseInt(document.getElementById('odometer').value);
-
-    let avgPrice = getAveragePrice(year, make, model, odometer);
-
-    let resultElement = document.getElementById('result');
-    if (avgPrice !== null) {
-        resultElement.innerText = `The average price for a ${year} ${make} ${model} with ${odometer} miles is: $${avgPrice.toFixed(2)}`;
-    } else {
-        resultElement.innerText = `No data found for ${year} ${make} ${model}.`;
-    }
-});
-
-function getAveragePrice(year, make, model, odometer) {
-    // Perform the necessary logic to calculate the average price
-    // This could be similar to the previous Python function you had
-    // Return the average price or null if no data is found
-    return null;
+    fetch('/predict', {
+        method: 'POST',
+        // Ensure the Content-Type is set correctly for form data
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(formData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();  // Parse JSON only if the response was ok
+    })
+    .then(data => {
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        document.getElementById('prediction-result').innerText = 'Predicted Price: ' + data.prediction;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('prediction-result').innerText = 'Error: ' + error.message;
+    });
 }
+
+document.getElementById("predictionForm").addEventListener("submit", sendPredictionRequest);
