@@ -10,7 +10,6 @@ function sendPredictionRequest(event) {
 
     fetch('/predict', {
         method: 'POST',
-        // Ensure the Content-Type is set correctly for form data
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -20,15 +19,13 @@ function sendPredictionRequest(event) {
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
-        return response.json();  // Parse JSON only if the response was ok
+        return response.json(); // Parse JSON only if the response was ok
     })
     .then(data => {
         if (data.error) {
             throw new Error(data.error);
         }
-        displayResults(data, formData.year, formData.make, formData.model, formData.mileage);    
-        renderGraph(data.averagePrice, data.lowestPrice, data.highestPrice);
-        document.getElementById('prediction-result').innerText = 'Predicted Price: ' + data.prediction;
+        displayResults(data, formData.year, formData.make, formData.model, formData.mileage);
     })
     .catch(error => {
         console.error('Error:', error);
@@ -36,6 +33,7 @@ function sendPredictionRequest(event) {
     });
 }
 
+// Global variable to hold the chart instance
 var myChart;
 
 function renderGraph(averagePrice, lowestPrice, highestPrice) {
@@ -44,7 +42,8 @@ function renderGraph(averagePrice, lowestPrice, highestPrice) {
         // Destroy the previous chart
         myChart.destroy();
     }
-    var chart = new Chart(ctx, {
+    // Create a new chart instance and assign it to the myChart variable
+    myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['Average Price', 'Lowest Price', 'Highest Price'],
@@ -79,10 +78,10 @@ function displayResults(data, year, make, model, mileage) {
     document.getElementById('predicted-price').innerText = `Predicted Price: ${data.prediction}`;
 
     // Display the results section and hide the form
-    document.getElementById('predictionForm').classList.add('hidden');
-    document.getElementById('prediction-result').classList.remove('hidden');
+    document.getElementById('predictionForm').style.display = 'none';
+    document.getElementById('prediction-result').style.display = 'block';
 
-    // Placeholder for graph rendering logic
+    // Render the graph with the received data
     renderGraph(data.averagePrice, data.lowestPrice, data.highestPrice);
 }
 

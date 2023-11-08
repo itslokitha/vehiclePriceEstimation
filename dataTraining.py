@@ -45,38 +45,37 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Print statements to log data received
         data = request.form
-        print("Form data received:", data)
-
-        # Convert form data to the correct data types
         model_year = int(data['year'])
         brand = data['make']
         model = data['model']
         mileage = int(data['mileage'])
 
-        average_price = float(target.mean())
-        lowest_price = float(target.min())
-        highest_price = float(target.max())
+        matching_cars = master_data[
+            (master_data['model_year'] == model_year) &
+            (master_data['brand'] == brand) &
+            (master_data['model'] == model) &
+            (master_data['mileage'] <= mileage + 8000) & 
+            (master_data['mileage'] >= mileage - 8000)
+        ]
 
-        # Logging the values before prediction
-        print(f"Predicting price for {model_year} {brand} {model} with {mileage} mileage.")
+        # Calculate statistics based on the filtered data
+        lowest_price = matching_cars['list_price'].min() if not matching_cars.empty else 0
+        average_price = matching_cars['list_price'].mean() if not matching_cars.empty else 0
+        highest_price = matching_cars['list_price'].max() if not matching_cars.empty else 0
 
-        # Predict the price and print the prediction
+        # Predict the price for the user's input
         prediction = predict_price(model_year, brand, model, mileage, rf_model, X_train)
-        print(f"Prediction: {prediction}")
 
-        # Return the prediction in a JSON response
+        # Return the prediction and statistics
         return jsonify({
-            'prediction': float(prediction),
+            'prediction': prediction,
             'averagePrice': average_price,
             'lowestPrice': lowest_price,
             'highestPrice': highest_price
         })
     except Exception as e:
-        # If there's an error, print it to the console
         print(f"An error occurred: {e}")
-        # And return an error message in the JSON response
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
