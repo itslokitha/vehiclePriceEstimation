@@ -55,6 +55,10 @@ def predict():
         model = data['model']
         mileage = int(data['mileage'])
 
+        average_price = float(target.mean())
+        lowest_price = float(target.min())
+        highest_price = float(target.max())
+
         # Logging the values before prediction
         print(f"Predicting price for {model_year} {brand} {model} with {mileage} mileage.")
 
@@ -63,7 +67,12 @@ def predict():
         print(f"Prediction: {prediction}")
 
         # Return the prediction in a JSON response
-        return jsonify({'prediction': prediction})
+        return jsonify({
+            'prediction': float(prediction),
+            'averagePrice': average_price,
+            'lowestPrice': lowest_price,
+            'highestPrice': highest_price
+        })
     except Exception as e:
         # If there's an error, print it to the console
         print(f"An error occurred: {e}")
