@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-csv_directory = '/Users/lokitha/Desktop/Final Project/dataExtractionProgram/datasheets'
+csv_directory = '/Users/lokitha/Desktop/vehiclePriceEstimation/datasheets'
 
 master_df = pd.DataFrame()
 
