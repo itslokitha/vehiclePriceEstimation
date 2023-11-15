@@ -2,8 +2,8 @@ name: Run Extraction
 
 on:
   schedule:
-    # At 02:00 AM UTC every day
-    - cron: '0 2 * * *'
+    # At 06:30 PM UTC every day
+    - cron: '30 18 * * *'
 
 jobs:
   extraction-job:
