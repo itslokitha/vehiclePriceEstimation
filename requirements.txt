@@ -19,3 +19,4 @@ threadpoolctl==3.1.0
 tzdata==2022.1
 Werkzeug==2.2.2
 zipp==3.8.0
+beautifulsoup4==4.10.0
