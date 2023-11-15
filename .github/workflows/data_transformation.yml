@@ -2,8 +2,8 @@ name: Run Data Transformation
 
 on:
   schedule:
-    # At 05:00 AM UTC every day
-    - cron: '0 5 * * *'
+    # At 04:00 AM Halifax time every day
+    - cron: '0 8 * * *'
 
 jobs:
   data-transformation-job:
@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8' # Again, specify the Python version
+          python-version: '3.8'
 
       - name: Install dependencies
         run: |
