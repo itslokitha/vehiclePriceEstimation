@@ -86,3 +86,16 @@ function displayResults(data, year, make, model, mileage) {
 }
 
 document.getElementById("predictionForm").addEventListener("submit", sendPredictionRequest);
+
+document.getElementById('theme-toggle').addEventListener('change', function(event) {
+    const label = document.getElementById('toggle-label');
+    if (event.target.checked) {
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
+        label.textContent = 'Light Mode';  // Change the label text to Light Mode
+    } else {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+        label.textContent = 'Dark Mode';  // Change the label text to Dark Mode
+    }
+});

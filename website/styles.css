@@ -1,65 +1,182 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body, input, button, .switch, label, h2 {
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
 
+/* Theme switcher styles */
+.theme-switcher {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#toggle-label {
+    margin-left: 10px;
+    font-size: 18px;
+    /* Default color, will change with theme */
+    transition: color 0.3s;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Light theme styles */
+.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.light-theme input,
+.light-theme button {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ccc;
+}
+
+/* Dark theme styles */
+.dark-theme {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-theme input,
+.dark-theme button {
+    background-color: #333333;
+    color: #ffffff;
+    border: 1px solid #757575;
+}
+
+.dark-theme .slider:before {
+    background-color: #757575;
+}
+
+.dark-theme #toggle-label {
+    color: #ffffff; /* Make label text visible in dark mode */
+}
+
+/* Container styling */
 .container {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    text-align: center;
 }
 
-input[type=text], input[type=number] {
-    width: 100%;
+header {
+    background-color: inherit;
+    color: inherit;
+}
+
+/* Form styling */
+form {
+    margin: 20px 0;
+}
+
+form h2 {
+    color: #000; /* Default form heading color */
+}
+
+input[type=text], input[type=number], input[type=submit] {
+    width: calc(100% - 20px);
     padding: 10px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
+    margin: 10px 0;
     border-radius: 4px;
+    border: 1px solid #ccc;
     box-sizing: border-box;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 input[type=submit] {
-    width: 100%;
-    background-color: #4CAF50;
+    background-color: #2196F3; /* Blue color for the submit button */
     color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
     cursor: pointer;
 }
 
 input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: #1e88e5;
 }
 
+/* Results styling */
 #prediction-result {
-    margin-top: 20px;
-    padding: 10px;
-    color: #ffffff;
-    background-color: #4CAF50;
-    border-radius: 4px;
-}
-
-.hidden {
     display: none;
 }
 
-#prediction-result {
-    text-align: center;
-    margin-top: 20px;
+#vehicle-info, #predicted-price {
+    margin: 10px 0;
 }
 
 #price-chart {
     width: 100%;
     max-width: 600px;
-    margin: auto;
+    margin: 20px auto;
+}
+
+/* Dark theme adjustments for form and results */
+.dark-theme .container,
+.dark-theme form h2,
+.dark-theme #vehicle-info,
+.dark-theme #predicted-price {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+/* Apply dark background to buttons and inputs on dark theme */
+.dark-theme input[type=text],
+.dark-theme input[type=number],
+.dark-theme input[type=submit] {
+    background-color: #424242;
+    color: #ffffff;
+    border: 1px solid #616161;
+}
+
+.dark-theme input[type=submit] {
+    background-color: #2196F3;
 }
