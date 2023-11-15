@@ -49,10 +49,6 @@ This repository contains a system that estimates and predicts the current and pa
 - Make your contributions.
 - Create a pull request.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ---
 
 For any inquiries, please contact Lokitha Nilaweera (mailto:anuja.lokitha@outlook.com).
