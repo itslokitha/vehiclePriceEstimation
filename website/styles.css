@@ -8,24 +8,25 @@ body, input, button, .switch, label, h2 {
 /* Theme switcher styles */
 .theme-switcher {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 25px;
+    right: 25px;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 }
 
 #toggle-label {
     margin-left: 10px;
-    font-size: 18px;
-    /* Default color, will change with theme */
+    font-size: 14px;
     transition: color 0.3s;
 }
 
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 40px;
+    height: 22px;
+    border-radius: 22px;
 }
 
 .switch input {
@@ -43,16 +44,16 @@ body, input, button, .switch, label, h2 {
     bottom: 0;
     background-color: #ccc;
     transition: .4s;
-    border-radius: 34px;
+    border-radius: 22px;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    bottom: 2px;
     background-color: white;
     transition: .4s;
     border-radius: 50%;
@@ -63,7 +64,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-    transform: translateX(26px);
+    transform: translateX(18px);
 }
 
 /* Light theme styles */
@@ -97,7 +98,7 @@ input:checked + .slider:before {
 }
 
 .dark-theme #toggle-label {
-    color: #ffffff; /* Make label text visible in dark mode */
+    color: #ffffff;
 }
 
 /* Container styling */
@@ -113,15 +114,21 @@ input:checked + .slider:before {
 header {
     background-color: inherit;
     color: inherit;
+    text-align: center;
 }
 
-/* Form styling */
+.title{
+    text-align: center;
+    width: 100%;
+}
+
+
 form {
     margin: 20px 0;
 }
 
 form h2 {
-    color: #000; /* Default form heading color */
+    color: #000;
 }
 
 input[type=text], input[type=number], input[type=submit] {
@@ -168,7 +175,7 @@ input[type=submit]:hover {
     color: #ffffff;
 }
 
-/* Apply dark background to buttons and inputs on dark theme */
+/* Applying dark background to buttons and inputs on dark theme */
 .dark-theme input[type=text],
 .dark-theme input[type=number],
 .dark-theme input[type=submit] {
@@ -180,3 +187,18 @@ input[type=submit]:hover {
 .dark-theme input[type=submit] {
     background-color: #2196F3;
 }
+
+#back-button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none; 
+  }
+  
+  #back-button.visible {
+    display: inline-block;
+  }

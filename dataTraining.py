@@ -37,8 +37,8 @@ def predict_price(model_year, brand, model, mileage, trained_model, training_fea
     predicted_price_rounded = round(predicted_price[0], 2)
     return predicted_price_rounded
 
-# Flask web server routes
-app = Flask(__name__, static_url_path='', static_folder='website')
+# Flask web server routes (when running locally, change the route of the static_folder)
+app = Flask(__name__, static_url_path='', static_folder='/Users/lokitha/Desktop/vehiclePriceEstimation/website')
 
 @app.route('/')
 def index():
@@ -80,6 +80,11 @@ def predict():
         print(f"An error occurred: {e}")
         return jsonify({'error': str(e)}), 500
 
+# For when running in Heroku
+# if __name__ == '__main__':
+#     port = int(os.environ.get('PORT', 5000))
+#     app.run(host='0.0.0.0', port=port)
+
+# For when running locally
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)

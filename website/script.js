@@ -1,5 +1,5 @@
 function sendPredictionRequest(event) {
-    event.preventDefault(); // Prevent the form from submitting normally
+    event.preventDefault();
     var formElements = document.getElementById("predictionForm").elements;
     var formData = {
         year: formElements.namedItem("year").value,
@@ -19,7 +19,7 @@ function sendPredictionRequest(event) {
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
-        return response.json(); // Parse JSON only if the response was ok
+        return response.json();
     })
     .then(data => {
         if (data.error) {
@@ -33,16 +33,13 @@ function sendPredictionRequest(event) {
     });
 }
 
-// Global variable to hold the chart instance
 var myChart;
 
 function renderGraph(averagePrice, lowestPrice, highestPrice) {
     var ctx = document.getElementById('price-chart').getContext('2d');
     if (myChart) {
-        // Destroy the previous chart
         myChart.destroy();
     }
-    // Create a new chart instance and assign it to the myChart variable
     myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -68,6 +65,19 @@ function renderGraph(averagePrice, lowestPrice, highestPrice) {
                 y: {
                     beginAtZero: true
                 }
+            },
+            plugins: {
+                tooltip: {
+                    enabled: true
+                },
+                datalabels: {
+                    color: '#000000',
+                    anchor: 'end',
+                    align: 'top',
+                    formatter: function(value, context) {
+                        return '$' + value.toFixed(2); // This will format the label as a price
+                    }
+                }
             }
         }
     });
@@ -76,26 +86,26 @@ function renderGraph(averagePrice, lowestPrice, highestPrice) {
 function displayResults(data, year, make, model, mileage) {
     document.getElementById('vehicle-info').innerText = `Year: ${year}, Make: ${make}, Model: ${model}, Mileage: ${mileage}`;
     document.getElementById('predicted-price').innerText = `Predicted Price: ${data.prediction}`;
-
-    // Display the results section and hide the form
-    document.getElementById('predictionForm').style.display = 'none';
     document.getElementById('prediction-result').style.display = 'block';
-
-    // Render the graph with the received data
+    document.getElementById('back-button').style.display = 'block';
     renderGraph(data.averagePrice, data.lowestPrice, data.highestPrice);
 }
+
+document.getElementById('back-button').addEventListener('click', function() {
+    document.getElementById('prediction-result').style.display = 'none';
+    document.getElementById('predictionForm').style.display = 'block';
+    this.style.display = 'none';
+});
 
 document.getElementById("predictionForm").addEventListener("submit", sendPredictionRequest);
 
 document.getElementById('theme-toggle').addEventListener('change', function(event) {
     const label = document.getElementById('toggle-label');
     if (event.target.checked) {
-        document.body.classList.remove('light-theme');
-        document.body.classList.add('dark-theme');
-        label.textContent = 'Light Mode';  // Change the label text to Light Mode
+        document.body.classList.replace('light-theme', 'dark-theme');
+        label.textContent = 'Light Mode';
     } else {
-        document.body.classList.add('light-theme');
-        document.body.classList.remove('dark-theme');
-        label.textContent = 'Dark Mode';  // Change the label text to Dark Mode
+        document.body.classList.replace('dark-theme', 'light-theme');
+        label.textContent = 'Dark Mode';
     }
 });

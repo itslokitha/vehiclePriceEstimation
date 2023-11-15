@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Vehicle Price Prediction - Nova Scotia</title>
         <link rel="stylesheet" href="styles.css">
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="script.js" defer></script>
     </head>
@@ -12,15 +14,14 @@
         <header>
             <h1>Vehicle Price Prediction - Nova Scotia</h1>
             <div class="theme-switcher">
+                <button id="back-button" class="hidden">Reset</button>
                 <label class="switch">
                     <input type="checkbox" id="theme-toggle">
                     <span class="slider round"></span>
                 </label>
-                <span id="toggle-label">Dark Mode</span>
             </div>
         </header>
         <div class="container">
-        <h1>Vehicle Price Prediction - Nova Scotia</h1>
         <form id="predictionForm">
             <input type="number" name="year" placeholder="Enter Year" required>
             <input type="text" name="make" placeholder="Enter Make" required>
