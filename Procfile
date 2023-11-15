@@ -1,1 +1,1 @@
-web: gunicorn dataTraining:app
+web: gunicorn dataTraining:dataTraining.py
