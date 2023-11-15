@@ -202,3 +202,35 @@ input[type=submit]:hover {
   #back-button.visible {
     display: inline-block;
   }
+
+  footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #f3f3f3; 
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-transform: italic;
+}
+
+.light-theme footer {
+    background-color: #f3f3f3;
+    color: #333;
+}
+
+.light-theme footer p{
+    margin: 0;
+    color: #333;
+    font-size: 0.9em;
+}
+
+.dark-theme footer {
+    background-color: #333; 
+    color: #f3f3f3;
+}
+
+.dark-theme footer p {
+    margin: 0;
+    color: #f3f3f3;
+    font-size: 0.9em;
+}

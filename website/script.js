@@ -75,7 +75,7 @@ function renderGraph(averagePrice, lowestPrice, highestPrice) {
                     anchor: 'end',
                     align: 'top',
                     formatter: function(value, context) {
-                        return '$' + value.toFixed(2); // This will format the label as a price
+                        return '$' + value.toFixed(2);
                     }
                 }
             }
@@ -88,7 +88,11 @@ function displayResults(data, year, make, model, mileage) {
     document.getElementById('predicted-price').innerText = `Predicted Price: ${data.prediction}`;
     document.getElementById('prediction-result').style.display = 'block';
     document.getElementById('back-button').style.display = 'block';
-    renderGraph(data.averagePrice, data.lowestPrice, data.highestPrice);
+    if (data.averagePrice > 0 || data.lowestPrice > 0 || data.highestPrice > 0) {
+        renderGraph(data.averagePrice, data.lowestPrice, data.highestPrice);
+    } else {
+        document.getElementById('price-chart').style.display = 'none';
+    }
 }
 
 document.getElementById('back-button').addEventListener('click', function() {
@@ -97,7 +101,15 @@ document.getElementById('back-button').addEventListener('click', function() {
     this.style.display = 'none';
 });
 
+function resetGraphDisplay() {
+    document.getElementById('price-chart').style.display = 'block';
+}
 document.getElementById("predictionForm").addEventListener("submit", sendPredictionRequest);
+
+document.getElementById("predictionForm").addEventListener("submit", function(event) {
+    resetGraphDisplay();
+    sendPredictionRequest(event);
+});
 
 document.getElementById('theme-toggle').addEventListener('change', function(event) {
     const label = document.getElementById('toggle-label');
