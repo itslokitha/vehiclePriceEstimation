@@ -62,9 +62,9 @@ function renderGraph(averagePrice, lowestPrice, highestPrice) {
         },
         options: {
             scales: {
-                y: {
+                yAxes: [{
                     beginAtZero: true
-                }
+                }]
             },
             plugins: {
                 tooltip: {
