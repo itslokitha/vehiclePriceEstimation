@@ -1,0 +1,25 @@
+name: Run Data Transformation
+
+on:
+  schedule:
+    # At 05:00 AM UTC every day
+    - cron: '0 5 * * *'
+
+jobs:
+  data-transformation-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8' # Again, specify the Python version
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run dataTransformation.py
+        run: python dataTransformation.py
