@@ -33,7 +33,9 @@ def predict_price(model_year, brand, model, mileage, trained_model, training_fea
     input_data[f'model_{model}'] = 1
     # Predict the price using the trained model
     predicted_price = trained_model.predict(input_data)
-    return predicted_price[0]
+    
+    predicted_price_rounded = round(predicted_price[0], 2)
+    return predicted_price_rounded
 
 # Flask web server routes
 app = Flask(__name__, static_url_path='', static_folder='website')
