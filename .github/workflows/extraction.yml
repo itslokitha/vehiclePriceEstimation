@@ -3,7 +3,7 @@ name: Run Extraction
 on:
   schedule:
     # At 03:00 AM Halifax time every day
-    - cron: '45 15 * * *'
+    - cron: '0 17 * * *'
 
 jobs:
   extraction-job:
