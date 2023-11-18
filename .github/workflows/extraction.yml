@@ -3,7 +3,7 @@ name: Run Extraction
 on:
   schedule:
     # At 03:00 AM Halifax time every day
-    - cron: '30 17 * * *'
+    - cron: '45 15 * * *'
 
 jobs:
   extraction-job:
@@ -26,8 +26,8 @@ jobs:
       
       - name: Commit and push changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "anu99nilaweera@gmail.com"
+          git config --local user.name "itslokitha"
           git add .  
           git commit -m "Update data files" -a || echo "No changes to commit"
           git push
