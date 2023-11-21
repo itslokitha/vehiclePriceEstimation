@@ -3,7 +3,7 @@ name: Run Data Transformation
 on:
   schedule:
     # At 05:00 AM Halifax time every day
-    - cron: '0 9 * * *'
+    - cron: '54 16 * * *'
 
 jobs:
   data-transformation-job:
@@ -23,3 +23,13 @@ jobs:
 
       - name: Run dataTransformation.py
         run: python dataTransformation.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "anu99nilaweera@gmail.com"
+          git config --local user.name "itslokitha"
+          git add .  
+          git commit -m "Update data files" -a || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
