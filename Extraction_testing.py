@@ -226,7 +226,7 @@ init_url = 'https://www.kijiji.ca/b-city-of-halifax/l1700321'
 page_num = get_page_num(init_url)
 
 all_info_list = []
-for page in range(1, page_num + 1):
+for page in range(1, page_num + 400):
     page_url = f'https://www.kijiji.ca/b-city-of-halifax/page-{page}/c27l1700321'
     html = urlopen(page_url)
     bs = BeautifulSoup(html, 'html.parser')
@@ -260,7 +260,7 @@ df.dropna(subset=['brand'], inplace=True)
 print(df)
 
 today_date = datetime.date.today().strftime('%Y-%m-%d')
-outputDirectory = 'C:/Users/itsLokitha/Desktop/vehiclePriceEstimation/datasheets'
+outputDirectory = 'datasheets'
 if not os.path.exists(outputDirectory):
     os.makedirs(outputDirectory)
 file_name = f'kijiji_data_{today_date}.csv'
