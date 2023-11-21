@@ -1,0 +1,35 @@
+name: Run Extraction
+
+on:
+  schedule:
+    # At 03:00 AM Halifax time every day
+    - cron: '26 02 * * *'
+
+jobs:
+  extraction-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Extraction.py
+        run: python Extraction.py
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "anu99nilaweera@gmail.com"
+          git config --local user.name "itslokitha"
+          git add .  
+          git commit -m "Update data files" -a || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
