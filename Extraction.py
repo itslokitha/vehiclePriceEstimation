@@ -234,7 +234,7 @@ page_num = get_page_num(init_url)
 
 page_num
 
-page_num = 100
+page_num = 1
 
 all_info_list = []
 itemlist = []
@@ -277,7 +277,7 @@ df.head()
 
 today_date = datetime.date.today().strftime('%Y-%m-%d')
 
-outputDirectory = 'C:/Users/itsLokitha/Desktop/vehiclePriceEstimation/datasheets'
+outputDirectory = 'datasheets'
 file_name = f'kijiji_data_{today_date}.csv'
 file_path = os.path.join(outputDirectory, file_name)
 
