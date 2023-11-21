@@ -234,7 +234,7 @@ page_num = get_page_num(init_url)
 
 page_num
 
-page_num = 100
+page_num = 1
 
 all_info_list = []
 itemlist = []
