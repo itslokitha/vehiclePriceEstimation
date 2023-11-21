@@ -22,7 +22,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Extraction.py
-        run: python Extraction.py
+        run: python Extraction_testing.py
       
       - name: Commit and push changes
         run: |
