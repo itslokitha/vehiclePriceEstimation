@@ -101,7 +101,6 @@ input:checked + .slider:before {
     color: #ffffff;
 }
 
-/* Container styling */
 .container {
     background-color: #fff;
     padding: 20px;
@@ -142,7 +141,7 @@ input[type=text], input[type=number], input[type=submit] {
 }
 
 input[type=submit] {
-    background-color: #2196F3; /* Blue color for the submit button */
+    background-color: #2196F3;
     color: white;
     cursor: pointer;
 }
@@ -151,7 +150,6 @@ input[type=submit]:hover {
     background-color: #1e88e5;
 }
 
-/* Results styling */
 #prediction-result {
     display: none;
 }
@@ -166,7 +164,6 @@ input[type=submit]:hover {
     margin: 20px auto;
 }
 
-/* Dark theme adjustments for form and results */
 .dark-theme .container,
 .dark-theme form h2,
 .dark-theme #vehicle-info,
@@ -175,7 +172,6 @@ input[type=submit]:hover {
     color: #ffffff;
 }
 
-/* Applying dark background to buttons and inputs on dark theme */
 .dark-theme input[type=text],
 .dark-theme input[type=number],
 .dark-theme input[type=submit] {
