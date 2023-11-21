@@ -1,25 +1,21 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-
 import datetime
 import re
 import os
-
 import pandas as pd
 import numpy as np
 
 def get_page_num(url):
-
     html = urlopen(url)
     bs = BeautifulSoup(html, 'html.parser')
     try:
-        page_info = bs.find('div',class_='showing').text
-        page_num = page_info.split()[-2].replace(',','')
-        page_num = int(int(page_num)/20)
-    except:
+        page_info = bs.find('div', class_='showing').text
+        page_num = page_info.split()[-2].replace(',', '')
+        page_num = int(int(page_num) / 20)
+    except Exception as e:
+        print(f"Error in get_page_num: {e}")
         page_num = 1
-        pass
-
     return page_num
 
 def get_item_info(url):
@@ -222,64 +218,52 @@ def get_item_info(url):
     item_info_list.append(item_vin_number)
     item_info_list.append(item_image_link)
     item_info_list.append(item_dealer_add)
-   
-    
-    
+
     return item_info_list
 
 base_url = 'https://www.kijiji.ca'
 init_url = 'https://www.kijiji.ca/b-city-of-halifax/l1700321'
-
 page_num = get_page_num(init_url)
 
-page_num
-
-page_num = 100
-
 all_info_list = []
-itemlist = []
-item_url = []
-
-for page in range(1,page_num):
-    page_url = 'https://www.kijiji.ca/b-city-of-halifax/'+'page+'+ str(page)+'/c27l1700321'
+for page in range(1, page_num + 1):
+    page_url = f'https://www.kijiji.ca/b-city-of-halifax/page-{page}/c27l1700321'
     html = urlopen(page_url)
     bs = BeautifulSoup(html, 'html.parser')
     for link in bs.find_all('a', href=re.compile('^(/v-cars-trucks/)((?!:).)*$')):
-        print('Page:',page)
+        print('Page:', page)
         if 'href' in link.attrs:
             item_url = base_url + link.attrs['href']
             if '?' not in item_url:
                 try:
                     print(item_url)
                     itemlist = get_item_info(item_url)
-                    #print(itemlist)
+                    print(itemlist)  # Debugging line
                     all_info_list.append(itemlist)
-                    itemlist = []
-                    
-                except:
+                except Exception as e:
+                    print(f"Error in loop: {e}")
                     pass
 
+# Check if all_info_list is populated
+print(all_info_list)
 
-df = pd.DataFrame(all_info_list)
+# Create DataFrame
+columns_name = ['brand', 'model', 'model_year', 'list_price', 'color', 'configuration', 'condition', 'body_type',
+                'wheel_config', 'transmission', 'fuel_type', 'mileage', 'carfax_link', 'vin_number', 'image_link', 'dealer_address']
+df = pd.DataFrame(all_info_list, columns=columns_name) if all_info_list else pd.DataFrame(columns=columns_name)
 
-df.head()
-
-columns_name = ['brand','model','model_year','list_price','color','configration','condition','body_type',\
-               'wheel_config','transmission','fuel_type','mileage','carfax_link','vin_number','image_link','dealer_address']
-
-df.columns = columns_name
-
+# Replace empty strings with NaN and drop rows where 'brand' is NaN
 nan_value = float("NaN")
 df.replace("", nan_value, inplace=True)
-df.dropna(subset=['brand'],inplace=True)
+df.dropna(subset=['brand'], inplace=True)
 
-df.head()
+print(df)
 
 today_date = datetime.date.today().strftime('%Y-%m-%d')
-
 outputDirectory = 'C:/Users/itsLokitha/Desktop/vehiclePriceEstimation/datasheets'
+if not os.path.exists(outputDirectory):
+    os.makedirs(outputDirectory)
 file_name = f'kijiji_data_{today_date}.csv'
 file_path = os.path.join(outputDirectory, file_name)
 
-# df.to_csv('kijiji_data_fullset.csv')
 df.to_csv(file_path, index=False)
