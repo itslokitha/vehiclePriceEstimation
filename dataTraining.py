@@ -11,8 +11,6 @@ app = Flask(__name__)
 
 file_path = 'master_data.csv'
 master_data = pd.read_csv(file_path)
-
-# Convert 'model_year' to an integer if it's not already
 master_data['model_year'] = pd.to_numeric(master_data['model_year'], errors='coerce').fillna(0).astype(int)
 
 # Calculate vehicle age from model year
@@ -24,16 +22,48 @@ target = master_data['list_price'][features.index]
 
 # One-hot encode categorical features
 features_encoded = pd.get_dummies(features[['brand', 'model']])
-
 features_encoded['vehicle_age'] = features['vehicle_age']
 features_encoded['mileage'] = features['mileage']
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(features_encoded, target, test_size=0.2, random_state=42)
+# K-Fold Cross-Validation setup
+kf = KFold(n_splits=10, random_state=42, shuffle=True)
+fold_performance = []
+fold_accuracy = []
 
-# Model training
-rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
-rf_model.fit(X_train, y_train)
+# Average vehicle price for the accuracy calculation
+average_vehicle_price = target.mean()
+
+#---------------------------------------------------------------------------------------------------------------------------------#
+# # Split the data into training and testing sets
+# X_train, X_test, y_train, y_test = train_test_split(features_encoded, target, test_size=0.2, random_state=42)
+
+# # Model training
+# rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+# rf_model.fit(X_train, y_train)
+
+#---------------------------------------------------------------------------------------------------------------------------------#
+
+# Iterate over each fold
+for train_index, test_index in kf.split(features_encoded):
+    X_train, X_test = features_encoded.iloc[train_index], features_encoded.iloc[test_index]
+    y_train, y_test = target.iloc[train_index], target.iloc[test_index]
+
+    rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+    rf_model.fit(X_train, y_train)
+
+    predictions = rf_model.predict(X_test)
+    mae = mean_absolute_error(y_test, predictions)
+    fold_performance.append(mae)
+
+    accuracy = mae / average_vehicle_price
+    fold_accuracy.append(accuracy)
+    print(f"Accuracy for fold {len(fold_performance)}: {accuracy:.2%}")
+
+# Calculate and print average performance and accuracy
+average_performance = np.mean(fold_performance)
+average_accuracy = np.mean(fold_accuracy)
+print(f"Average Mean Absolute Error across 10 folds: {average_performance:.2f}")
+print(f"Average Accuracy across 10 folds: {average_accuracy:.2%}")
 
 # Function to predict the price
 def predict_price(vehicle_age, brand, model, mileage, trained_model, training_features):
@@ -51,13 +81,22 @@ def predict_price(vehicle_age, brand, model, mileage, trained_model, training_fe
     predicted_price_rounded = round(predicted_price[0], 2)
     return predicted_price_rounded
 
-
 # Flask web server routes (when running locally, change the route of the static_folder)
-app = Flask(__name__, static_url_path='', static_folder='website')
+app = Flask(__name__, static_url_path='', static_folder='C:/Users/itsLokitha/Desktop/vehiclePriceEstimation/website')
 
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
+@app.route('/makes')
+def get_makes():
+    unique_makes = master_data['brand'].unique().tolist()
+    return jsonify(unique_makes)
+
+@app.route('/models/<make>')
+def get_models(make):
+    unique_models = master_data[master_data['brand'] == make]['model'].unique().tolist()
+    return jsonify(unique_models)
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -83,7 +122,6 @@ def predict():
 
         # Predict the price for the user's input
         prediction = predict_price(model_year, brand, model, mileage, rf_model, X_train)
-        print ("Hello this is working")
 
         # Return the prediction and statistics
         return jsonify({
@@ -97,10 +135,10 @@ def predict():
         return jsonify({'error': str(e)}), 500
 
 # For when running in Heroku
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+# if __name__ == '__main__':
+#     port = int(os.environ.get('PORT', 5000))
+#     app.run(host='0.0.0.0', port=port)
 
 # For when running locally
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -24,8 +24,12 @@
         <div class="container">
         <form id="predictionForm">
             <input type="number" name="year" placeholder="Enter Year" required>
-            <input type="text" name="make" placeholder="Enter Make" required>
-            <input type="text" name="model" placeholder="Enter Model" required>
+            <select name="make" id="make-dropdown" required>
+                <option value="">Select Make</option>
+            </select>
+            <select name="model" id="model-dropdown" required>
+                <option value="">Select Model</option>
+            </select>
             <input type="number" name="mileage" placeholder="Enter Mileage" required>
             <input type="submit" value="Predict">
         </form>

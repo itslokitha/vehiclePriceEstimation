@@ -1,3 +1,40 @@
+document.addEventListener('DOMContentLoaded', function() {
+    fetchMakes();
+    document.getElementById('make-dropdown').addEventListener('change', function() {
+        let selectedMake = this.value;
+        fetchModels(selectedMake);
+    });
+});
+
+function fetchMakes() {
+    fetch('/makes')
+        .then(response => response.json())
+        .then(data => {
+            let makeDropdown = document.getElementById('make-dropdown');
+            data.forEach(make => {
+                let option = document.createElement('option');
+                option.value = make;
+                option.textContent = make;
+                makeDropdown.appendChild(option);
+            });
+        });
+}
+
+function fetchModels(make) {
+    fetch('/models/' + make)
+        .then(response => response.json())
+        .then(data => {
+            let modelDropdown = document.getElementById('model-dropdown');
+            modelDropdown.innerHTML = '<option value="">Select Model</option>';
+            data.forEach(model => {
+                let option = document.createElement('option');
+                option.value = model;
+                option.textContent = model;
+                modelDropdown.appendChild(option);
+            });
+        });
+}
+
 function sendPredictionRequest(event) {
     event.preventDefault();
     var formElements = document.getElementById("predictionForm").elements;
