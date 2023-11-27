@@ -79,11 +79,7 @@ def predict():
         highest_price = matching_cars['list_price'].max() if not matching_cars.empty else 0
 
         # Predict the price for the user's input
-<<<<<<< HEAD
         prediction = predict_price(model_year, brand, model, mileage, rf_model, X_train)
-=======
-        # prediction = predict_price(model_year, brand, model, mileage, rf_model, X_train)
->>>>>>> d6a899acf3ea46b8291fe6b57c548b3d257725d7
         print ("Hello this is working")
 
         # Return the prediction and statistics
