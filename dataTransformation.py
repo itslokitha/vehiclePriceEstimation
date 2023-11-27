@@ -12,6 +12,7 @@ for filename in os.listdir(csv_directory):
         df = pd.read_csv(file_path)
         
         df_cleaned = df.drop_duplicates(subset=['model_year', 'brand', 'model', 'mileage', 'color', 'list_price'], keep='last')
+        df_cleaned = df_cleaned[df_cleaned['list_price'] != 0]
         
         master_df = pd.concat([master_df, df_cleaned], ignore_index=True)
 
