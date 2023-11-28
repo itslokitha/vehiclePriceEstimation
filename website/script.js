@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     populateDropdown('/years', 'year-dropdown');
     populateDropdown('/makes', 'make-dropdown');
-    populateDropdown('/wheel-configurations', 'wheel-configuration-dropdown');
-    populateDropdown('/fuel-types', 'fuel-type-dropdown');
-    populateDropdown('/colors', 'color-dropdown');
     document.getElementById('make-dropdown').addEventListener('change', function() {
         let selectedMake = this.value;
         fetchModels(selectedMake);
