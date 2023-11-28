@@ -98,6 +98,12 @@ def get_models(make):
     unique_models = master_data[master_data['brand'] == make]['model'].unique().tolist()
     return jsonify(unique_models)
 
+@app.route('/years')
+def get_years():
+    current_year = datetime.now().year
+    years = list(range(current_year, current_year - 20, -1))
+    return jsonify(years)
+
 @app.route('/predict', methods=['POST'])
 def predict():
     try:

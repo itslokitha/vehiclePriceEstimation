@@ -130,7 +130,7 @@ form h2 {
     color: #000;
 }
 
-input[type=text], input[type=number], input[type=submit] {
+input[type=text], input[type=number], input[type=submit], select {
     width: calc(100% - 20px);
     padding: 10px;
     margin: 10px 0;
@@ -174,7 +174,8 @@ input[type=submit]:hover {
 
 .dark-theme input[type=text],
 .dark-theme input[type=number],
-.dark-theme input[type=submit] {
+.dark-theme input[type=submit],
+.dark-theme select {
     background-color: #424242;
     color: #ffffff;
     border: 1px solid #616161;

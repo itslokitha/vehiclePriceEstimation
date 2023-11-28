@@ -1,10 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetchMakes();
+    populateDropdown('/years', 'year-dropdown');
+    populateDropdown('/makes', 'make-dropdown');
     document.getElementById('make-dropdown').addEventListener('change', function() {
         let selectedMake = this.value;
         fetchModels(selectedMake);
     });
 });
+
+function populateDropdown(apiEndpoint, dropdownId) {
+    fetch(apiEndpoint)
+        .then(response => response.json())
+        .then(data => {
+            let dropdown = document.getElementById(dropdownId);
+            data.forEach(item => {
+                let option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                dropdown.appendChild(option);
+            });
+        });
+}
 
 function fetchMakes() {
     fetch('/makes')
@@ -20,19 +35,24 @@ function fetchMakes() {
         });
 }
 
+// function fetchModels(make) {
+//     fetch('/models/' + make)
+//         .then(response => response.json())
+//         .then(data => {
+//             let modelDropdown = document.getElementById('model-dropdown');
+//             modelDropdown.innerHTML = '<option value="">Select Model</option>';
+//             data.forEach(model => {
+//                 let option = document.createElement('option');
+//                 option.value = model;
+//                 option.textContent = model;
+//                 modelDropdown.appendChild(option);
+//             });
+//         });
+// }
+
 function fetchModels(make) {
-    fetch('/models/' + make)
-        .then(response => response.json())
-        .then(data => {
-            let modelDropdown = document.getElementById('model-dropdown');
-            modelDropdown.innerHTML = '<option value="">Select Model</option>';
-            data.forEach(model => {
-                let option = document.createElement('option');
-                option.value = model;
-                option.textContent = model;
-                modelDropdown.appendChild(option);
-            });
-        });
+    let apiEndpoint = '/models/' + make;
+    populateDropdown(apiEndpoint, 'model-dropdown');
 }
 
 function sendPredictionRequest(event) {
