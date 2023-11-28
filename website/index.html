@@ -42,6 +42,14 @@
                 <option value="">Select Color</option>
             </select>
             <input type="number" name="mileage" placeholder="Enter Mileage" required>
+            <select name="condition" id="condition-dropdown" required>
+                <option value="">Select Condition</option>
+                <option value="no_issues">No Issues</option>
+                <option value="accident_major">Accident - Major</option>
+                <option value="accident_minor">Accident - Minor</option>
+                <option value="rust_major">Rust - Major</option>
+                <option value="rust_minor">Rust - Minor</option>
+            </select>            
             <input type="submit" value="Predict">
         </form>
         <div id="prediction-result" class="hidden">

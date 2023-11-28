@@ -89,7 +89,8 @@ function sendPredictionRequest(event) {
         year: formElements.namedItem("year").value,
         make: formElements.namedItem("make").value,
         model: formElements.namedItem("model").value,
-        mileage: formElements.namedItem("mileage").value
+        mileage: formElements.namedItem("mileage").value,
+        condition: formElements.namedItem("condition").value
     };
 
     fetch('/predict', {

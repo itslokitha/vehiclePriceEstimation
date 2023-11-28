@@ -129,6 +129,18 @@ def predict():
         brand = data['make']
         model = data['model']
         mileage = int(data['mileage'])
+        condition = data['condition']
+
+        condition_adjustments = {
+            'no_issues': 0,
+            'accident_major': -0.10,
+            'accident_minor': -0.03,
+            'rust_major': -0.10,
+            'rust_minor': -0.02
+        }
+        adjustment_factor = condition_adjustments.get(condition, 0)
+        prediction = predict_price(model_year, brand, model, mileage, rf_model, X_train)
+        adjusted_prediction = prediction * (1 + adjustment_factor)
 
         matching_cars = master_data[
             (master_data['model_year'] == model_year) &
@@ -151,6 +163,7 @@ def predict():
             'prediction': prediction,
             'averagePrice': average_price,
             'lowestPrice': lowest_price,
+            'prediction': adjusted_prediction,
             'highestPrice': highest_price
         })
     except Exception as e:
