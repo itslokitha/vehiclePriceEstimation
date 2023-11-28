@@ -104,6 +104,21 @@ def get_years():
     years = list(range(current_year, current_year - 20, -1))
     return jsonify(years)
 
+@app.route('/wheel-configurations')
+def get_wheel_configurations():
+    configurations = master_data['wheel_configuration'].unique().tolist()
+    return jsonify(configurations)
+
+@app.route('/fuel-types')
+def get_fuel_types():
+    fuel_types = master_data['fuel_type'].unique().tolist()
+    return jsonify(fuel_types)
+
+@app.route('/colors')
+def get_colors():
+    colors = master_data['color'].unique().tolist()
+    return jsonify(colors)
+
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
