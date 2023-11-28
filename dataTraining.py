@@ -16,14 +16,18 @@ master_data['model_year'] = pd.to_numeric(master_data['model_year'], errors='coe
 # Calculate vehicle age from model year
 current_year = datetime.now().year
 master_data['vehicle_age'] = current_year - master_data['model_year']
+master_data['vehicle_age_squared'] = master_data['vehicle_age'] ** 2
+master_data['mileage_squared'] = master_data['mileage'] ** 2
 
-features = master_data[['brand', 'model', 'vehicle_age', 'mileage']].dropna()
+features = master_data[['brand', 'model', 'vehicle_age', 'mileage', 'vehicle_age_squared', 'mileage_squared']].dropna()
 target = master_data['list_price'][features.index]
 
 # One-hot encode categorical features
 features_encoded = pd.get_dummies(features[['brand', 'model']])
 features_encoded['vehicle_age'] = features['vehicle_age']
 features_encoded['mileage'] = features['mileage']
+features_encoded['vehicle_age_squared'] = features['vehicle_age_squared']
+features_encoded['mileage_squared'] = features['mileage_squared']
 
 # K-Fold Cross-Validation setup
 kf = KFold(n_splits=10, random_state=42, shuffle=True)
@@ -116,21 +120,6 @@ def get_options(brand, model):
     return jsonify({'wheelConfigurations': wheel_configs, 
                     'fuelTypes': fuel_types, 
                     'colors': colors})
-
-# @app.route('/wheel-configurations')
-# def get_wheel_configurations():
-#     configurations = master_data['wheel_configuration'].unique().tolist()
-#     return jsonify(configurations)
-
-# @app.route('/fuel-types')
-# def get_fuel_types():
-#     fuel_types = master_data['fuel_type'].unique().tolist()
-#     return jsonify(fuel_types)
-
-# @app.route('/colors')
-# def get_colors():
-#     colors = master_data['color'].unique().tolist()
-#     return jsonify(colors)
 
 @app.route('/predict', methods=['POST'])
 def predict():
