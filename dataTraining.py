@@ -104,20 +104,33 @@ def get_years():
     years = list(range(current_year, current_year - 20, -1))
     return jsonify(years)
 
-@app.route('/wheel-configurations')
-def get_wheel_configurations():
-    configurations = master_data['wheel_configuration'].unique().tolist()
-    return jsonify(configurations)
+@app.route('/options/<brand>/<model>')
+def get_options(brand, model):
+    filtered_data = master_data[(master_data['brand'] == brand) & 
+                                (master_data['model'] == model)]
+    
+    wheel_configs = filtered_data['wheel_config'].unique().tolist()
+    fuel_types = filtered_data['fuel_type'].unique().tolist()
+    colors = filtered_data['color'].unique().tolist()
 
-@app.route('/fuel-types')
-def get_fuel_types():
-    fuel_types = master_data['fuel_type'].unique().tolist()
-    return jsonify(fuel_types)
+    return jsonify({'wheelConfigurations': wheel_configs, 
+                    'fuelTypes': fuel_types, 
+                    'colors': colors})
 
-@app.route('/colors')
-def get_colors():
-    colors = master_data['color'].unique().tolist()
-    return jsonify(colors)
+# @app.route('/wheel-configurations')
+# def get_wheel_configurations():
+#     configurations = master_data['wheel_configuration'].unique().tolist()
+#     return jsonify(configurations)
+
+# @app.route('/fuel-types')
+# def get_fuel_types():
+#     fuel_types = master_data['fuel_type'].unique().tolist()
+#     return jsonify(fuel_types)
+
+# @app.route('/colors')
+# def get_colors():
+#     colors = master_data['color'].unique().tolist()
+#     return jsonify(colors)
 
 @app.route('/predict', methods=['POST'])
 def predict():

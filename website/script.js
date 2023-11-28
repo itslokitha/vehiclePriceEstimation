@@ -10,6 +10,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+document.getElementById('model-dropdown').addEventListener('change', function() {
+    let selectedMake = document.getElementById('make-dropdown').value;
+    let selectedModel = this.value;
+    updateOptions(selectedMake, selectedModel);
+});
+
+function updateOptions(make, model) {
+    fetch(`/options/${make}/${model}`)
+        .then(response => response.json())
+        .then(data => {
+            populateDropdownWithData('wheel-configuration-dropdown', data.wheelConfigurations);
+            populateDropdownWithData('fuel-type-dropdown', data.fuelTypes);
+            populateDropdownWithData('color-dropdown', data.colors);
+        });
+}
+
+function populateDropdownWithData(dropdownId, data) {
+    let dropdown = document.getElementById(dropdownId);
+    dropdown.innerHTML = `<option value="">Select ${dropdownId.split('-')[0]}</option>`;
+    data.forEach(item => {
+        let option = document.createElement('option');
+        option.value = item;
+        option.textContent = item;
+        dropdown.appendChild(option);
+    });
+}
+
 function populateDropdown(apiEndpoint, dropdownId) {
     fetch(apiEndpoint)
         .then(response => response.json())
