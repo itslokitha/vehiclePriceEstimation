@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Price Estimator</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div id="header-placeholder"></div>
-    <main>
-        <h1>Welcome to the Vehicle Price Estimator</h1>
-        <p>
-            The Vehicle Price Estimator is an intuitive tool designed to help you estimate the market value of vehicles. 
-            Whether you're planning to buy or sell a car, our app provides you with quick and reliable price estimates based on a variety of factors, 
-            including make, model, year, and more. Get started by navigating to the Price Predictor!
-        </p>
-    </main>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vehicle Price Estimator</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="script.js" defer></script>
+    </head>
+    <body class="light-theme">
+        <div id="header-placeholder"></div>
+        <main>
+            <h1>Welcome to the Vehicle Price Estimator</h1>
+            <p>
+                The Vehicle Price Estimator is an intuitive tool designed to help you estimate the market value of vehicles. 
+                Whether you're planning to buy or sell a car, our app provides you with quick and reliable price estimates based on a variety of factors, 
+                including make, model, year, and more. Get started by navigating to the Price Predictor!
+            </p>
+        </main>
+    </body>
     <div id="footer-placeholder"></div>
     <script>
         function includeHTML() {
@@ -44,8 +47,12 @@
 
         document.getElementById("header-placeholder").setAttribute("w3-include-html", "header.html");
         document.getElementById("footer-placeholder").setAttribute("w3-include-html", "footer.html");
-        includeHTML();
+        includeHTML(function() {
+            // This function will run after all the includes are done
+            // Now it's safe to load the script.js
+            var script = document.createElement('script');
+            script.src = "script.js";
+            document.body.appendChild(script);
+        });
     </script>
-    <script src="script.js"></script>
-</body>
 </html>

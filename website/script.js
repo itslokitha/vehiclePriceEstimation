@@ -13,21 +13,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.body.addEventListener('change', function(event) {
         if (event.target && event.target.id === 'theme-toggle') {
+            console.log('Theme toggle clicked'); // Log when the toggle is clicked
             const label = document.getElementById('toggle-label');
             if (event.target.checked) {
+                console.log('Switching to dark theme'); // Log theme switching
                 document.body.classList.replace('light-theme', 'dark-theme');
-                document.body.classList.add('dark-theme');
-                document.body.classList.remove('light-theme');
                 label.textContent = 'Light Mode';
             } else {
+                console.log('Switching to light theme'); // Log theme switching
                 document.body.classList.replace('dark-theme', 'light-theme');
-                document.body.classList.add('light-theme');
-                document.body.classList.remove('dark-theme');
                 label.textContent = 'Dark Mode';
             }
         }
     });
 });
+
+// Function to toggle the theme
+function toggleTheme(event) {
+    const label = document.getElementById('toggle-label');
+    const isDarkMode = event.target.checked;
+    document.body.classList.toggle('dark-theme', isDarkMode);
+    document.body.classList.toggle('light-theme', !isDarkMode);
+    if (label) {
+        label.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+    }
+}
 
 document.getElementById('model-dropdown').addEventListener('change', function() {
     let selectedMake = document.getElementById('make-dropdown').value;
@@ -83,21 +93,6 @@ function fetchMakes() {
             });
         });
 }
-
-// function fetchModels(make) {
-//     fetch('/models/' + make)
-//         .then(response => response.json())
-//         .then(data => {
-//             let modelDropdown = document.getElementById('model-dropdown');
-//             modelDropdown.innerHTML = '<option value="">Select Model</option>';
-//             data.forEach(model => {
-//                 let option = document.createElement('option');
-//                 option.value = model;
-//                 option.textContent = model;
-//                 modelDropdown.appendChild(option);
-//             });
-//         });
-// }
 
 function fetchModels(make) {
     let apiEndpoint = '/models/' + make;
@@ -228,29 +223,3 @@ document.getElementById('theme-toggle').addEventListener('change', function(even
         label.textContent = 'Dark Mode';
     }
 });
-
-function includeHTML() {
-    var z, i, elmnt, file, xhttp;
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-        elmnt = z[i];
-        file = elmnt.getAttribute("w3-include-html");
-        if (file) {
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    elmnt.innerHTML = this.responseText;
-                    elmnt.removeAttribute("w3-include-html");
-                    includeHTML();
-                }
-            }      
-            xhttp.open("GET", file, true);
-            xhttp.send();
-            return;
-        }
-    }
-}
-
-document.getElementById("header-placeholder").setAttribute("w3-include-html", "header.html");
-document.getElementById("footer-placeholder").setAttribute("w3-include-html", "footer.html");
-includeHTML();

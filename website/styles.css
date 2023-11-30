@@ -5,6 +5,18 @@ body, input, button, .switch, label, h2 {
     transition: background-color 0.3s, color 0.3s;
 }
 
+body.light-theme{
+    background: url('paisley.png');
+    background-size: cover;
+    background-repeat: repeat;
+}
+
+body.dark-theme{
+    background: url('double-bubble-dark.png');
+    background-size: cover; 
+    background-repeat: repeat;
+}
+
 /* Theme switcher styles */
 .theme-switcher {
     position: absolute;
@@ -230,4 +242,56 @@ input[type=submit]:hover {
     margin: 0;
     color: #f3f3f3;
     font-size: 0.9em;
+}
+
+nav {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+nav ul {
+    display: inline-block; 
+    padding-left: 0; 
+}
+
+nav li {
+    display: inline; 
+    margin-right: 20px; 
+}
+
+nav li:last-child {
+    margin-right: 0; 
+}
+
+nav a {
+    font-weight: bold; 
+    font-size: 18px; 
+    text-decoration: none; 
+}
+
+/* Light Theme Styles for Navigation Bar */
+.light-theme nav a {
+    color: #000; 
+}
+
+.light-theme nav a:hover,
+.light-theme nav a.active {
+    color: #2196F3; 
+}
+
+/* Dark Theme Styles for Navigation Bar */
+.dark-theme nav a {
+    color: #fff; 
+}
+
+.dark-theme nav a:hover,
+.dark-theme nav a.active {
+    color: #90CAF9;
+}
+
+.decorative-element {
+    background: url('01-WEVC-van-commercial-vehicle-application-c-m.jpg') no-repeat center center;
+    background-size: cover;
+    height: 150px; /* Adjust as per your design */
+    width: 100%;
 }

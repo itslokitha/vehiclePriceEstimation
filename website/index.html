@@ -12,6 +12,7 @@
     </head>
     <body class="light-theme">
         <div id="header-placeholder"></div>
+        <div class="decorative-element"></div>
         <div class="container">
         <form id="predictionForm">
             <select name="year" id="year-dropdown" required>
@@ -76,7 +77,13 @@
 
         document.getElementById("header-placeholder").setAttribute("w3-include-html", "header.html");
         document.getElementById("footer-placeholder").setAttribute("w3-include-html", "footer.html");
-        includeHTML();
+        includeHTML(function() {
+            // This function will run after all the includes are done
+            // Now it's safe to load the script.js
+            var script = document.createElement('script');
+            script.src = "script.js";
+            document.body.appendChild(script);
+        });
     </script>
 </body>
 </html>
