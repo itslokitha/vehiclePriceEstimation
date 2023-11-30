@@ -10,22 +10,22 @@ document.addEventListener('DOMContentLoaded', function() {
             sendPredictionRequest(event);
         }
     });
+});
 
-    document.body.addEventListener('change', function(event) {
-        if (event.target && event.target.id === 'theme-toggle') {
-            console.log('Theme toggle clicked'); // Log when the toggle is clicked
-            const label = document.getElementById('toggle-label');
-            if (event.target.checked) {
-                console.log('Switching to dark theme'); // Log theme switching
-                document.body.classList.replace('light-theme', 'dark-theme');
-                label.textContent = 'Light Mode';
-            } else {
-                console.log('Switching to light theme'); // Log theme switching
-                document.body.classList.replace('dark-theme', 'light-theme');
-                label.textContent = 'Dark Mode';
-            }
+document.body.addEventListener('change', function(event) {
+    if (event.target && event.target.id === 'theme-toggle') {
+        console.log('Theme toggle clicked'); // Log when the toggle is clicked
+        const label = document.getElementById('toggle-label');
+        if (event.target.checked) {
+            console.log('Switching to dark theme'); // Log theme switching
+            document.body.classList.replace('light-theme', 'dark-theme');
+            label.textContent = 'Light Mode';
+        } else {
+            console.log('Switching to light theme'); // Log theme switching
+            document.body.classList.replace('dark-theme', 'light-theme');
+            label.textContent = 'Dark Mode';
         }
-    });
+    }
 });
 
 // Function to toggle the theme
