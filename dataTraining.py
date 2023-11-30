@@ -86,7 +86,7 @@ def predict_price(vehicle_age, brand, model, mileage, trained_model, training_fe
     return predicted_price_rounded
 
 # Flask web server routes (when running locally, change the route of the static_folder)
-app = Flask(__name__, static_url_path='', static_folder='C:/Users/itsLokitha/Desktop/vehiclePriceEstimation/website')
+app = Flask(__name__, static_url_path='', static_folder='/Users/lokitha/Desktop/vehiclePriceEstimation/website')
 
 @app.route('/')
 def index():

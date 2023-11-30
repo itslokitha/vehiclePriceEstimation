@@ -5,6 +5,24 @@ document.addEventListener('DOMContentLoaded', function() {
         let selectedMake = this.value;
         fetchModels(selectedMake);
     });
+    document.body.addEventListener("submit", function(event) {
+        if (event.target && event.target.id === "predictionForm") {
+            sendPredictionRequest(event);
+        }
+    });
+
+    document.body.addEventListener('change', function(event) {
+        if (event.target && event.target.id === 'theme-toggle') {
+            const label = document.getElementById('toggle-label');
+            if (event.target.checked) {
+                document.body.classList.replace('light-theme', 'dark-theme');
+                label.textContent = 'Light Mode';
+            } else {
+                document.body.classList.replace('dark-theme', 'light-theme');
+                label.textContent = 'Dark Mode';
+            }
+        }
+    });
 });
 
 document.getElementById('model-dropdown').addEventListener('change', function() {
@@ -207,28 +225,28 @@ document.getElementById('theme-toggle').addEventListener('change', function(even
     }
 });
 
-function includeHTML() {
-    var z, i, elmnt, file, xhttp;
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-        elmnt = z[i];
-        file = elmnt.getAttribute("w3-include-html");
-        if (file) {
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    elmnt.innerHTML = this.responseText;
-                    elmnt.removeAttribute("w3-include-html");
-                    includeHTML();
-                }
-            }      
-            xhttp.open("GET", file, true);
-            xhttp.send();
-            return;
-        }
-    }
-}
+// function includeHTML() {
+//     var z, i, elmnt, file, xhttp;
+//     z = document.getElementsByTagName("*");
+//     for (i = 0; i < z.length; i++) {
+//         elmnt = z[i];
+//         file = elmnt.getAttribute("w3-include-html");
+//         if (file) {
+//             xhttp = new XMLHttpRequest();
+//             xhttp.onreadystatechange = function() {
+//                 if (this.readyState == 4 && this.status == 200) {
+//                     elmnt.innerHTML = this.responseText;
+//                     elmnt.removeAttribute("w3-include-html");
+//                     includeHTML();
+//                 }
+//             }      
+//             xhttp.open("GET", file, true);
+//             xhttp.send();
+//             return;
+//         }
+//     }
+// }
 
-document.getElementById("header-placeholder").setAttribute("w3-include-html", "header.html");
-document.getElementById("footer-placeholder").setAttribute("w3-include-html", "footer.html");
-includeHTML();
+// document.getElementById("header-placeholder").setAttribute("w3-include-html", "header.html");
+// document.getElementById("footer-placeholder").setAttribute("w3-include-html", "footer.html");
+// includeHTML();
