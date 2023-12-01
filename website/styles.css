@@ -5,6 +5,14 @@ body, input, button, .switch, label, h2 {
     transition: background-color 0.3s, color 0.3s;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Use viewport height */
+    position: relative;
+    padding-bottom: 60px; /* Footer height */
+}
+
 body.light-theme{
     background: url('paisley.png');
     background-size: cover;
@@ -208,11 +216,11 @@ input[type=submit]:hover {
     display: none; 
   }
   
-  #back-button.visible {
+#back-button.visible {
     display: inline-block;
   }
 
-  footer {
+footer {
     text-align: center;
     padding: 10px;
     background-color: #f3f3f3; 
@@ -220,6 +228,7 @@ input[type=submit]:hover {
     bottom: 0;
     width: 100%;
     text-transform: italic;
+    height: 50px; /* Set the height of your footer */
 }
 
 .light-theme footer {
@@ -292,6 +301,6 @@ nav a {
 .decorative-element {
     background: url('01-WEVC-van-commercial-vehicle-application-c-m.jpg') no-repeat center center;
     background-size: cover;
-    height: 150px; /* Adjust as per your design */
+    height: 150px;
     width: 100%;
 }

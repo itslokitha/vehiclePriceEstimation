@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     populateDropdown('/years', 'year-dropdown');
     populateDropdown('/makes', 'make-dropdown');
+    
     document.getElementById('make-dropdown').addEventListener('change', function() {
         let selectedMake = this.value;
         fetchModels(selectedMake);
@@ -10,33 +11,44 @@ document.addEventListener('DOMContentLoaded', function() {
             sendPredictionRequest(event);
         }
     });
+
+    document.getElementById("predictionForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+        sendPredictionRequest(event);
+    });
+
+    // document.body.addEventListener('change', function(event) {
+    //     if (event.target && event.target.id === 'theme-toggle') {
+    //         console.log('Theme toggle clicked'); // Log when the toggle is clicked
+    //         const label = document.getElementById('toggle-label');
+    //         if (event.target.checked) {
+    //             console.log('Switching to dark theme'); // Log theme switching
+    //             document.body.classList.replace('light-theme', 'dark-theme');
+    //             label.textContent = 'Light Mode';
+    //         } else {
+    //             console.log('Switching to light theme'); // Log theme switching
+    //             document.body.classList.replace('dark-theme', 'light-theme');
+    //             label.textContent = 'Dark Mode';
+    //         }
+    //     }
+    // });
+    
 });
 
-document.body.addEventListener('change', function(event) {
-    if (event.target && event.target.id === 'theme-toggle') {
-        console.log('Theme toggle clicked'); // Log when the toggle is clicked
-        const label = document.getElementById('toggle-label');
-        if (event.target.checked) {
-            console.log('Switching to dark theme'); // Log theme switching
-            document.body.classList.replace('light-theme', 'dark-theme');
-            label.textContent = 'Light Mode';
-        } else {
-            console.log('Switching to light theme'); // Log theme switching
-            document.body.classList.replace('dark-theme', 'light-theme');
-            label.textContent = 'Dark Mode';
-        }
-    }
-});
-
-// Function to toggle the theme
-function toggleTheme(event) {
-    const label = document.getElementById('toggle-label');
-    const isDarkMode = event.target.checked;
-    document.body.classList.toggle('dark-theme', isDarkMode);
-    document.body.classList.toggle('light-theme', !isDarkMode);
-    if (label) {
-        label.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
-    }
+// Function to populate dropdowns
+function populateDropdown(apiEndpoint, dropdownId) {
+    fetch(apiEndpoint)
+        .then(response => response.json())
+        .then(data => {
+            let dropdown = document.getElementById(dropdownId);
+            dropdown.innerHTML = `<option value="">Select ${dropdownId.split('-')[0]}</option>`;
+            data.forEach(item => {
+                let option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                dropdown.appendChild(option);
+            });
+        });
 }
 
 document.getElementById('model-dropdown').addEventListener('change', function() {
@@ -223,3 +235,14 @@ document.getElementById('theme-toggle').addEventListener('change', function(even
         label.textContent = 'Dark Mode';
     }
 });
+
+// Function to toggle the theme
+function toggleTheme(event) {
+    const label = document.getElementById('toggle-label');
+    const isDarkMode = event.target.checked;
+    document.body.classList.toggle('dark-theme', isDarkMode);
+    document.body.classList.toggle('light-theme', !isDarkMode);
+    if (label) {
+        label.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+    }
+}

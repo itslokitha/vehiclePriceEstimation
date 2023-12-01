@@ -151,19 +151,21 @@ def predict():
         ]
 
         # Calculate statistics based on the filtered data
-        lowest_price = matching_cars['list_price'].min() if not matching_cars.empty else 0
-        average_price = matching_cars['list_price'].mean() if not matching_cars.empty else 0
-        highest_price = matching_cars['list_price'].max() if not matching_cars.empty else 0
+        lowest_price = int(matching_cars['list_price'].min()) if not matching_cars.empty else 0
+        average_price = float(matching_cars['list_price'].mean()) if not matching_cars.empty else 0
+        highest_price = int(matching_cars['list_price'].max()) if not matching_cars.empty else 0
 
         # Predict the price for the user's input
         prediction = predict_price(model_year, brand, model, mileage, rf_model, X_train)
+        prediction = float(prediction)
+
 
         # Return the prediction and statistics
         return jsonify({
             'prediction': prediction,
             'averagePrice': average_price,
             'lowestPrice': lowest_price,
-            'prediction': adjusted_prediction,
+            'adjustedPrediction': adjusted_prediction,
             'highestPrice': highest_price
         })
     except Exception as e:

@@ -11,7 +11,22 @@
         <script src="script.js" defer></script>
     </head>
     <body class="light-theme">
-        <div id="header-placeholder"></div>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="homepage.html" class="active">Home</a></li>
+                    <li><a href="index.html" class="active">Price Predictor</a></li>
+                </ul>
+            </nav>
+            <h1>Vehicle Price Predictor - Nova Scotia</h1>
+            <div class="theme-switcher">
+                <button id="back-button" class="hidden">Reset</button>
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </header>
         <div class="decorative-element"></div>
         <div class="container">
         <form id="predictionForm">
@@ -51,39 +66,8 @@
             <canvas id="price-chart"></canvas>
         </div>
     </div>
-    <div id="footer-placeholder"></div>
-    <script>
-        function includeHTML() {
-            var z, i, elmnt, file, xhttp;
-            z = document.getElementsByTagName("*");
-            for (i = 0; i < z.length; i++) {
-                elmnt = z[i];
-                file = elmnt.getAttribute("w3-include-html");
-                if (file) {
-                    xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-                            elmnt.innerHTML = this.responseText;
-                            elmnt.removeAttribute("w3-include-html");
-                            includeHTML();
-                        }
-                    }      
-                    xhttp.open("GET", file, true);
-                    xhttp.send();
-                    return;
-                }
-            }
-        }
-
-        document.getElementById("header-placeholder").setAttribute("w3-include-html", "header.html");
-        document.getElementById("footer-placeholder").setAttribute("w3-include-html", "footer.html");
-        includeHTML(function() {
-            // This function will run after all the includes are done
-            // Now it's safe to load the script.js
-            var script = document.createElement('script');
-            script.src = "script.js";
-            document.body.appendChild(script);
-        });
-    </script>
+    <footer>
+        <p><em>Developed by <strong>Lokitha Nilaweera</strong> (157736n)</em> | &copy; 2023</p>
+    </footer>
 </body>
 </html>
