@@ -1,3 +1,11 @@
+# Name: Lokitha Nilaweera (157736)
+# Project: Capstone Project
+# Department: Computer Science
+# School: Acadia University
+# Title: Vehicle Price Predictor - NS
+# Supervisor: Dr. Danny Silver
+# Program Title: dataTransformation.py
+
 import os
 import pandas as pd
 

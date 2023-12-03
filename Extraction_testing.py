@@ -1,3 +1,11 @@
+# Name: Lokitha Nilaweera (157736)
+# Project: Capstone Project
+# Department: Computer Science
+# School: Acadia University
+# Title: Vehicle Price Predictor - NS
+# Supervisor: Dr. Danny Silver
+# Program Title: extraction.py
+
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import datetime
@@ -20,8 +28,6 @@ def get_page_num(url):
 
 def get_item_info(url):
     item_info_list = []
-    
-    
     item_brand = ''
     item_model = ''
     item_date = ''
@@ -38,7 +44,6 @@ def get_item_info(url):
     item_vin_number = ''
     item_image_link = ''
     item_dealer_add = ''
-   
     html = urlopen(url)
     bs_item = BeautifulSoup(html, 'html.parser')
 
@@ -50,6 +55,7 @@ def get_item_info(url):
     except:
         item_brand =''
         print ("Brand not found")
+
 # Get model info    
     try:
         model = bs_item.find_all('span', class_='sc-dNsVcS cjFKdZ')
@@ -86,25 +92,21 @@ def get_item_info(url):
         item_color = ''
         print ("Color not found")
 
-# Get the configuration
+# Get the configuration (Error due to site change)
     # try:
     #     item_config = bs_item.find(itemprop='vehicleConfiguration').text
     # except:
     #     item_config = ''
     #     print ("Vehicle configuration not found")
-
         
 # Get the car condition
     try:
-        # item_condition = bs_item.find(itemprop='itemCondition').text
-
         condition = bs_item.find_all('span', class_='sc-lnPyaJ dkyjZe')
         item_condition = condition[0].text
         print (item_condition)
     except:
         item_condition = ''
         print ("Vehicle condition not found")
-
         
 # Get the body type
     try:
@@ -114,7 +116,6 @@ def get_item_info(url):
     except:
         item_bodytype = ''
         print ("Bodytype not found")
-
         
 # Get the wheel configuration
     try:
@@ -145,7 +146,6 @@ def get_item_info(url):
 
 # Get the mileage 
     try:
-        # item_mileage = bs_item.find(itemprop='mileageFromOdometer').text
         mileage = bs_item.find_all('span', class_='sc-lnPyaJ dkyjZe')
         item_mileage = mileage[1].text
         item_mileage = int(item_mileage.replace(',',''))
@@ -156,10 +156,10 @@ def get_item_info(url):
         print ("Mileage not found")
     
 # Car Accident Report link
-
     item_carfax = bs_item.find('a', href=re.compile('^(https://reports.carproof.com)((?!:).)*$'))
     try:
         item_carfax_link = item_carfax.attrs['href']
+
     except:
         item_carfax = bs_item.find('a', href=re.compile('^(https://www.carproof.com)((?!:).)*$'))
         try: 
@@ -169,15 +169,14 @@ def get_item_info(url):
             print ("Accident report link is not found")
 
 # Get vin number
-    
     try:
         vin = bs_item.find_all('span', class_='sc-dNsVcS cjFKdZ')
         item_vin_number = vin[9].text
         print (item_vin_number)
+
     except:
         item_vin_number = ''
-        print ("VIN number not found")
-            
+        print ("VIN number not found")  
             
 # Get dealer's address        
     try:
@@ -190,7 +189,6 @@ def get_item_info(url):
         item_dealer_add = ''
         print ("Address not found")
  
-
 # Get car image link
 
     try:
@@ -238,7 +236,7 @@ for page in range(1, page_num + 400):
                 try:
                     print(item_url)
                     itemlist = get_item_info(item_url)
-                    print(itemlist)  # Debugging line
+                    print(itemlist)  # Used this line for Debugging purposes to see which data are extracted and which are not in the console
                     all_info_list.append(itemlist)
                 except Exception as e:
                     print(f"Error in loop: {e}")
@@ -263,7 +261,7 @@ today_date = datetime.date.today().strftime('%Y-%m-%d')
 outputDirectory = 'datasheets'
 if not os.path.exists(outputDirectory):
     os.makedirs(outputDirectory)
-file_name = f'kijiji_data_{today_date}.csv'
+file_name = f'kijiji_data_{today_date}.csv' # Creates the datasheet with the specific date
 file_path = os.path.join(outputDirectory, file_name)
 
 df.to_csv(file_path, index=False)

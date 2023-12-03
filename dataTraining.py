@@ -1,3 +1,11 @@
+# Name: Lokitha Nilaweera (157736)
+# Project: Capstone Project
+# Department: Computer Science
+# School: Acadia University
+# Title: Vehicle Price Predictor - NS
+# Supervisor: Dr. Danny Silver
+# Program Title: dataTraining.py
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
@@ -29,23 +37,13 @@ features_encoded['mileage'] = features['mileage']
 features_encoded['vehicle_age_squared'] = features['vehicle_age_squared']
 features_encoded['mileage_squared'] = features['mileage_squared']
 
-# K-Fold Cross-Validation setup
+# K-Fold Cross-Validation setup for 10 folds
 kf = KFold(n_splits=10, random_state=42, shuffle=True)
 fold_performance = []
 fold_accuracy = []
 
 # Average vehicle price for the accuracy calculation
 average_vehicle_price = target.mean()
-
-#---------------------------------------------------------------------------------------------------------------------------------#
-# # Split the data into training and testing sets
-# X_train, X_test, y_train, y_test = train_test_split(features_encoded, target, test_size=0.2, random_state=42)
-
-# # Model training
-# rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
-# rf_model.fit(X_train, y_train)
-
-#---------------------------------------------------------------------------------------------------------------------------------#
 
 # Iterate over each fold
 for train_index, test_index in kf.split(features_encoded):
@@ -71,21 +69,18 @@ print(f"Average Accuracy across 10 folds: {average_accuracy:.2%}")
 
 # Function to predict the price
 def predict_price(vehicle_age, brand, model, mileage, trained_model, training_features):
-    # Initialize input data with zeros for all features
     input_data = pd.DataFrame(columns=training_features.columns)
     input_data.loc[0] = 0
-    # Set the values for the input data
     input_data['vehicle_age'] = vehicle_age
     input_data['mileage'] = mileage
     input_data[f'brand_{brand}'] = 1
     input_data[f'model_{model}'] = 1
     # Predict the price using the trained model
     predicted_price = trained_model.predict(input_data)
-    
     predicted_price_rounded = round(predicted_price[0], 2)
     return predicted_price_rounded
 
-# Flask web server routes (when running locally, change the route of the static_folder)
+# Flask web server routes (when running locally, change the route of the "static_folder")
 app = Flask(__name__, static_url_path='', static_folder='/Users/lokitha/Desktop/vehiclePriceEstimation/website')
 
 @app.route('/')
@@ -158,7 +153,6 @@ def predict():
         # Predict the price for the user's input
         prediction = predict_price(model_year, brand, model, mileage, rf_model, X_train)
         prediction = float(prediction)
-
 
         # Return the prediction and statistics
         return jsonify({

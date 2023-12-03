@@ -1,3 +1,11 @@
+/* Name: Lokitha Nilaweera (157736)
+Project: Capstone Project
+Department: Computer Science
+School: Acadia University
+Title: Vehicle Price Predictor - NS
+Supervisor: Dr. Danny Silver
+Program Title: styles.css */
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body, input, button, .switch, label, h2 {
@@ -8,9 +16,9 @@ body, input, button, .switch, label, h2 {
 body {
     margin: 0;
     padding: 0;
-    min-height: 100vh; /* Use viewport height */
+    min-height: 100vh;
     position: relative;
-    padding-bottom: 60px; /* Footer height */
+    padding-bottom: 60px;
 }
 
 body.light-theme{
@@ -228,7 +236,7 @@ footer {
     bottom: 0;
     width: 100%;
     text-transform: italic;
-    height: 50px; /* Set the height of your footer */
+    height: 50px;
 }
 
 .light-theme footer {
@@ -278,7 +286,6 @@ nav a {
     text-decoration: none; 
 }
 
-/* Light Theme Styles for Navigation Bar */
 .light-theme nav a {
     color: #000; 
 }
@@ -288,7 +295,6 @@ nav a {
     color: #2196F3; 
 }
 
-/* Dark Theme Styles for Navigation Bar */
 .dark-theme nav a {
     color: #fff; 
 }

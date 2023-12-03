@@ -1,3 +1,11 @@
+// Name: Lokitha Nilaweera (157736)
+// Project: Capstone Project
+// Department: Computer Science
+// School: Acadia University
+// Title: Vehicle Price Predictor - NS
+// Supervisor: Dr. Danny Silver
+// Program Title: script.js
+
 document.addEventListener('DOMContentLoaded', function() {
     populateDropdown('/years', 'year-dropdown');
     populateDropdown('/makes', 'make-dropdown');
@@ -13,26 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById("predictionForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
         sendPredictionRequest(event);
     });
-
-    // document.body.addEventListener('change', function(event) {
-    //     if (event.target && event.target.id === 'theme-toggle') {
-    //         console.log('Theme toggle clicked'); // Log when the toggle is clicked
-    //         const label = document.getElementById('toggle-label');
-    //         if (event.target.checked) {
-    //             console.log('Switching to dark theme'); // Log theme switching
-    //             document.body.classList.replace('light-theme', 'dark-theme');
-    //             label.textContent = 'Light Mode';
-    //         } else {
-    //             console.log('Switching to light theme'); // Log theme switching
-    //             document.body.classList.replace('dark-theme', 'light-theme');
-    //             label.textContent = 'Dark Mode';
-    //         }
-    //     }
-    // });
-    
 });
 
 // Function to populate dropdowns
